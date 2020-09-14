@@ -18,7 +18,7 @@ function Login() {
         e.preventDefault();
         auth.createUserWithEmailAndPassword(email, password)
             .then((authCredential) => { 
-                console.log(authCredential) 
+                
                 if (authCredential){
                     history.push('/');
                 }

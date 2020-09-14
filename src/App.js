@@ -14,6 +14,9 @@ function App() {
 
   useEffect(()=>{
     // *will run only once when the app component loads...
+    // *since we are not passing anything in the second argument []
+    // *but if we did it will rerun when that changes
+    // *eg [basket] will rerun when the basket changes
     auth.onAuthStateChanged(authUser=>{
       // *the user is logged in
       if(authUser){
@@ -26,10 +29,10 @@ function App() {
         dispatch({
           type:"SET_USER",
           user:null
-        })
+        });
       }
-    })
-  })
+    });
+  },[])
 
   return (
     // *BEM
