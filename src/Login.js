@@ -1,16 +1,30 @@
 import React, { useState } from 'react'
 import "./Login.css"
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
+import { auth } from "./firebase";
 function Login() {
-
+    const history = useHistory();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const signIn = e => {
         e.preventDefault();
-       
+        auth.signInWithEmailAndPassword(email,password)
+        .then((authCredential) =>{
+            history.push('/') 
+        }).catch(error=>alert(error.message));
+
     }
     const register = e => {
         e.preventDefault();
+        auth.createUserWithEmailAndPassword(email, password)
+            .then((authCredential) => { 
+                console.log(authCredential) 
+                if (authCredential){
+                    history.push('/');
+                }
+            })
+            .catch(error => alert(error.message));
+
     }
 
     return (
@@ -22,7 +36,7 @@ function Login() {
             <div className="login__container">
                 <h1>Sign-in</h1>
                 <form action="">
-                    <h5>Email</h5>
+                    <h5>E-mail</h5>
                     <input type="text" value={email}
                         onChange={e => setEmail(e.target.value)} />
 
